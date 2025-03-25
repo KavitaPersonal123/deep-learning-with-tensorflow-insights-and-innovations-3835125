@@ -10,13 +10,34 @@ X_train_full, X_test, y_train_full, y_test = train_test_split(housing.data, hous
 X_train, X_valid, y_train, y_valid = train_test_split(X_train_full, y_train_full, random_state=42)
 
 # Standardize the data
+scaler = StandardScaler()
+X_train = scaler.fit_transform(X_train)
+X_valid = scaler.transform(X_valid)
+X_test = scaler.transform(X_test)
+
 
 # Build the model with 2 hidden layers
+model = tf.keras.Sequential([
+  tf.keras.layers.Demse(30, activation = 'relu', input_shape=X_train([1:]),
+  tf.keras.layers.Demse(30, activation = 'relu'),
+  tf.keras.layers.Demse(1)
+])
 
 # Compile the model
+model.compile(loss="mean_squared_error, optimizer='sgd')
 
 # Train the model
+history = model.fit(X_train, y_train, epochs=20, validation_data=X_valid, y_valid))
+
 
 # Evaluate the model on the test set
+mse_test = model.evaluate(X-test, y_test)
 
 # Plot the training and validation loss
+plt.plot(history.history['loss'], label='Loss')
+plt.plot(history.history['val_loss'], label='Validation Loss')
+plt.xlabel('Epochs')
+plt.ylabel('Loss')
+plt.legend()
+plt.savefig('output\03_08_loss_plot.png')
+
